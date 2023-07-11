@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-def find_topmost_crates_in_stacks():
+def find_topmost_crates_in_stacks(part=1):
     with open("5/input.txt") as inp:
         lines = inp.read().splitlines()
         move_start_line = 0
@@ -25,8 +25,12 @@ def find_topmost_crates_in_stacks():
         # move items between stacks
         for line in lines[move_start_line:]:
             count, from_stack, to_stack = tuple(map(int, (elem for elem in line.split(" ") if elem.isdigit())))
-            for _ in range(count):
-                stacks[to_stack].append(stacks[from_stack].pop())
+            if part == 1:
+                for _ in range(count):
+                    stacks[to_stack].append(stacks[from_stack].pop())
+            else:
+                stacks[to_stack].extend(stacks[from_stack][-count:])
+                stacks[from_stack] = stacks[from_stack][:-count]
         
         # find the top most crate in all stacks in sorted order and append it to top_crates list
         top_crates = []
@@ -40,8 +44,9 @@ def find_topmost_crates_in_stacks():
         # return the final answer as string
         return "".join(top_crates)
 
+
 def main():
-    print(find_topmost_crates_in_stacks())
+    print(find_topmost_crates_in_stacks(2))
     pass
 
 
