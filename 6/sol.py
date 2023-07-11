@@ -1,15 +1,14 @@
-def index_of_first_4_distinct_characters():
+def index_of_first_n_distinct_characters(n):
     with open("6/input.txt") as inp:
         signal = inp.readline()
         
-        for i in range(len(signal)-3):
-            if len(set(signal[i: i+4])) == 4:
-                return i+4
+        for i in range(len(signal)-(n-1)):
+            if len(set(signal[i: i+n])) == n:
+                return i+n
 
 
 def main():
-    print(index_of_first_4_distinct_characters())
-    pass
+    print(index_of_first_n_distinct_characters(14))
 
 
 if __name__ == "__main__":
