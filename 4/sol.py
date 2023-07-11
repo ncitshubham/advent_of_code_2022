@@ -12,10 +12,27 @@ def count_overlapping_assgmts():
                 count += 1
             
         return count
+
+def count_overlapping_assgmts2():
+    with open("4/input.txt") as inp:
+        assmts = inp.read().splitlines()
+
+        count = 0
+        for assmt in assmts:
+            first, second = assmt.split(",")
+            first = list(map(int, first.split("-")))
+            second = list(map(int, second.split("-")))
+            
+            if (first[0] < second[0] and first[1] < second[0]) or (second[0] < first[0] and second[1] < first[0]):
+                continue
+            else:
+                count += 1
+            
+        return count
     
 
 def main():
-    print(count_overlapping_assgmts())
+    print(count_overlapping_assgmts2())
     pass
 
 
