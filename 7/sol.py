@@ -1,3 +1,5 @@
+import math
+
 class Node:
     def __init__(self, name, parent, size=0):
         self.name = name
@@ -10,6 +12,8 @@ class Solution:
     root = Node("/", None)
     small_dir_limit = 100_000
     total_size_of_small_dirs = 0
+    needed_space = math.inf
+    del_dir_size = math.inf
     
     def create_file_tree(self):
         with open("7/input.txt") as inp:
@@ -54,6 +58,8 @@ class Solution:
 
         if size < self.small_dir_limit:
             self.total_size_of_small_dirs += size
+        if size > self.needed_space:
+            self.del_dir_size = min(self.del_dir_size, size)
 
         return size
 
@@ -62,8 +68,12 @@ def main():
     soln = Solution()
     soln.create_file_tree()
 
-    soln.calc_dir_sizes(soln.root)
-    print(soln.total_size_of_small_dirs)
+    total_size = soln.calc_dir_sizes(soln.root)
+    print("total_of_small_dirs:", soln.total_size_of_small_dirs)
+    
+    soln.needed_space = 30_000_000 - (70_000_000 - total_size)
+    total_size = soln.calc_dir_sizes(soln.root)
+    print("delete directory size:", soln.del_dir_size)
 
 
 if __name__ == "__main__":
